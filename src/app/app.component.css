@@ -6,7 +6,7 @@ h2 {
   
   ul {
     margin: 0;
-    padding: 0 0 0 1.5em;
+    padding: 10px 50px 10px;;
   }
   
   li {
@@ -17,6 +17,8 @@ h2 {
   b { /* used for event dates/times */
     margin-right: 3px;
   }
+  
+  
   
   .demo-app {
     display: flex;
@@ -43,6 +45,21 @@ h2 {
   
   .fc { /* the calendar root */
     max-width: 1100px;
-    margin: 0 auto;
   }
-  
+
+  #x{
+margin-top: 100px;
+  }
+  #c{
+    margin-top: 50px;
+    margin-left: 10px;
+    margin-right: 10px;
+    position: relative;
+  }
+  .container{
+    margin-top: 0%;
+    margin-top: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+
+  }

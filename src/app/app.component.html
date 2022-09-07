@@ -1,143 +1,154 @@
-<!-- Aqui empieza la ediccion buena  -->
-<div class="container ">
-    
-    <div class="row">
-      <div class="col" >
-        <full-calendar [options]="calendarOptions" 
-                ></full-calendar> 
-        
-
-            <button type="button" 
-            class="bt btn-primary" 
-            (click)="toggleWeekends()"> 5 days </button>
-      </div>
-
-      <div class="col">
-            <div class="row">
-                <div class="col-9">
-                    <h3> Agenda </h3>
-                    <hr>
-                </div>
-                <form  [formGroup]="miFormulario" (ngSubmit)="agregarEvento( )" >
-                    <!-- (ngSubmit)="agregarEvento()" -->
-
-                    <!-- Campo de titulo -->
-                    <div class="row mb-3">
-                        <label class="col-sm-3 col-form-label">Titulo</label>
-                        <div class="col-sm-9">
-                            <input type="text"
-                                    formControlName="titulo"
-                                    class="form-control"
-                                    placeholder="Ingrese un titulo"
-                                    
-                                    >
-                                    <!-- [formControl]="nuevoEvento" -->
-                            <span class="form-text text-danger"
-                            *ngIf="CampoEsValido('titulo')">
-                                    Debe tener un titulo
-                            </span>
-                        </div>
-                    </div>
-                    <!-- Campo inicio de fecha -->
-                    <div class="row mb-3">
-                        <label class="col-sm-3 col-form-label">Fecha de inicio</label>
-                        <div class="col-sm-9">
-                            <input type="datetime-local"
-                                    formControlName="inicio"
-                                    class="form-control">
-                            <span class="form-text text-danger"
-                                    *ngIf="CampoEsValido('inicio')">
-                                Debe tener fecha de inicio
-                            </span>
-                        </div>
-                    </div>
-                    <!-- Campo fin de fecha -->
-                    <div class="row mb-3">
-                        <label class="col-sm-3 col-form-label">Fecha final</label>
-                        <div class="col-sm-9">
-                            <input type="datetime-local"
-                                    formControlName="fin"
-                                class="form-control">
-                        </div>
-                    </div>
-
-                    <!-- Color del evento -->
-                    <div class="row mb-3">
-                        <label class="col-sm-3 col-form-label">Color</label>
-                        <div class="col-sm-9">
-                            <input type="color"
-                                    formControlName="color"
-                                    class="form-control"
-                                    
-                                    
-                                    >
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col">
-                            <button type="submit"
-                                    class="btn btn-primary float -end"
-                                    (click)="agregarEvento( )"
-                                    [disabled]="miFormulario.invalid"
-                                    >
-                                    <!-- (click)="agregarEvento()" -->
-                                    <!-- [disabled]="miFormulario.invalid" -->
-                                Agregar Evento
-                            </button>
-                        </div>
-                    </div>
-
-                    Lista de eventos
-                    <label class="col-sm-3 col-form-label">Eventos</label>
-                    <div class="col-sm-9" formArrayName="Eventos">
-                        <div class="input-group mb-1" 
-                                *ngFor="let e of EventosArr.controls; let i = index">
-                        <input type="color"> 
-
-                        <input class ="from-control"
-                                [formControlName]="i">
-                            <button class="btn btn-outline-danger"
-                                    type="button">Eliminar
-                            </button>
-                        </div>
-                    </div> 
 
 
-                </form>
-                
-            </div>
-      </div>
-    </div>
-</div>
 
 <div class="row">
-    <div class="col">
-        <span>nuevoEvento</span>
-        <pre>{{nuevoEvento.value}}</pre>
-        <!-- <span>Valid</span>
-        <pre>{{miFormulario.valid}}</pre>
+    <div class="col-md-8">
+        <full-calendar id="c" [options]="calendarOptions" #calendar></full-calendar> 
+    </div>
+    <div class="col-md-4">
+        <div class="col">
+            <h3>
+                Agenda
+            </h3>
 
-        <span>Pristine</span>
-        <pre>{{miFormulario.pristine}}</pre> -->
-        <hr>
-        <!-- <span>Titulo </span> -->
-        <!-- <pre>{{title.valid }}</pre>
-        <pre>{{title.value}}</pre>
-        <span>Color</span>
-        <pre>{{Color.valid}}</pre>
-        <pre>{{Color.value}}</pre> -->
+            <form  [formGroup]="miFormulario ">
+                <!-- (ngSubmit)="agregarEvento() -->
+                    
 
-        <!-- <br>
-        <hr>
-        <span>Touched</span>
-        <pre>{{miFormulario.touched}}</pre>
-        <hr> -->
-        <span>value</span>
-        <pre>{{miFormulario.value | json}}</pre>
+                    
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Titulo</label>
+                    <div class="col-sm-9">
+                        <input type="text"
+                                [formControl]="nuevoTitulo" 
+                                class="form-control"
+                                placeholder="Ingrese un titulo"
+                                
+                                >
+                                
+                        <span class="form-text text-danger"
+                        *ngIf="CampoEsValido('titulo')">
+                                Debe tener un titulo
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Fecha de inicio</label>
+                    <div class="col-sm-9">
+                        <input type="datetime-local"
+                                [formControl]="nuevoInicio"
+                                class="form-control">
+                                
+                        <span class="form-text text-danger"
+                                *ngIf="CampoEsValido('inicio')">
+                            Debe tener fecha de inicio
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Fecha final</label>
+                    <div class="col-sm-9">
+                        <input type="datetime-local"
+                                formControlName="fin"
+                            class="form-control">
+                    </div>
+                </div>
 
+                
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Color</label>
+                    <div class="col-sm-9">
+                        <input type="color"
+                                formControlName="color"
+                                class="form-control">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <button type="submit"
+                                class="btn btn-primary float-end"
+                                (click)="agregarEvento( )"
+                                
+                                (click)="agregarListaEventos()"
+                                >
+                                <!-- [disabled]="miFormulario.invalid" -->
+                            Agregar Evento
+                        </button>
+                    </div>
+                </div>
+
+            
+
+
+
+                    <h3>Editar Evento</h3>
+
+                    <div formArrayName="Eventos" >
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                <th>Titulo</th>
+                                <th>Color</th>
+                                <th>Inicio</th>
+                                <th>Fin</th>
+                                <th>Eliminar</th>
+                                </tr>
+                            </thead>
+                            <tbody  *ngFor="let e of EventosArr.controls; let i = index"
+                            >
+                                <td>
+                                    <input
+                                    type="text"
+                                    class="form-control"
+                                    [formControlName]="i"
+                                    >
+                                </td>
+                                <td>
+                                    <input type="color"
+                                    class="form-control"
+                                    >
+                                </td>
+                                <td>
+                                    <input type="datetime-local"
+                                [formControlName]="i">
+                                </td>
+                                <td>
+                                    <input type="datetime-local">
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-outline-danger"
+                                            >
+                                        Eliminar
+                                    </button>
+                                </td>
+
+                            </tbody>
+                        </table>
+                    </div>
+            </form>
+        </div>
     </div>
 </div>
+  
+
+
+
+
+<div class="row justify-content-evenly">
+    <div class="col-4">
+     <pre>{{miFormulario.value  | json}}</pre>
+    </div>
+    <div class="col-4">
+
+        <span>NuevoTItulo</span>
+        <pre>{{nuevoTitulo.valid}}</pre>
+        <hr>
+    <pre>{{nuevoTitulo.value}}</pre>
+    </div>
+  </div>
 
 
 

@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormRecord, Validators } from '@angular/forms';
-import {  CalendarContent, CalendarOptions } from '@fullcalendar/angular';
+import {  CalendarContent, CalendarOptions, FullCalendarComponent } from '@fullcalendar/angular';
 import { EventApi, DateSelectArg, EventClickArg, CalendarApi } from '@fullcalendar/core/';
 
 
@@ -14,7 +14,7 @@ import { EventApi, DateSelectArg, EventClickArg, CalendarApi } from '@fullcalend
 })
 export class AppComponent  {
   
-  
+  @ViewChild('calendar') calendarv! : FullCalendarComponent
 
   miFormulario: FormGroup = this.fb.group({
     
@@ -23,11 +23,12 @@ export class AppComponent  {
     fin: [''],
     color: [''],
     Eventos : this.fb.array([
-      ['deadth Stranding'],
-      ['ddeded']
-    ])
+
+      
+    ],Validators.required)
   });
-  nuevoEvento: FormControl = this.fb.control('')
+  nuevoTitulo: FormControl = this.fb.control('',Validators.required)
+  nuevoInicio: FormControl = this.fb.control('')
 
   get EventosArr(){
     return this.miFormulario.get('Eventos') as FormArray
@@ -35,7 +36,7 @@ export class AppComponent  {
 
   constructor(private fb: FormBuilder){}
 
-  currentEvent: EventApi[] = [];
+ 
 
   calendarOptions : CalendarOptions = {
     initialView: 'dayGridMonth',
@@ -51,73 +52,51 @@ export class AppComponent  {
     selectable: true,
     selectMirror: true,
     dayMaxEvents: true,
-    select : this.handleDateSelect.bind(this),
     eventClick : this.handleeventClick.bind(this), 
-    eventsSet: this.handleEvents.bind(this),
-    // eventAdd : this.agregarEvento.bind(this)
-    
     };
 
-  handleDateSelect(selectInfo : DateSelectArg){
-    const calendarApi = selectInfo.view.calendar;
-    
-    this.EventosArr.push( new FormControl( this.nuevoEvento.value ) );
-
-  //  this.nuevoEvento.reset();
-   
-
-    calendarApi.unselect();
-    
-      calendarApi.addEvent({
-        
-        title: this.miFormulario.controls?.['titulo'].value,
-        start : this.miFormulario.controls?.['inicio'].value,
-        end : this.miFormulario.controls?.['fin'].value,
-        allDay: false,
-        color: this.miFormulario.controls?.['color'].value
-      })
-    console.log(EventApi)
-    console.log(this.EventosArr)
-    console.log(selectInfo)
-    console.log(calendarApi )
-    
-  }
-  // agregarEvento(event:DateSelectArg){
-  //   const calendarApi = event.view.calendar
-   
-  //   calendarApi.unselect();
-    
-  //     calendarApi.addEvent({
-       
-  //       title: this.miFormulario.controls?.['titulo'].value,
-  //       start : this.miFormulario.controls?.['inicio'].value,
-  //       end : this.miFormulario.controls?.['fin'].value,
-  //       allDay: false,
-  //       color: this.miFormulario.controls?.['color'].value
-  //     })
-  // }
   agregarEvento(){
+    let calendarApi = this.calendarv.getApi();
 
+    calendarApi.addEvent({
+      // title: this.miFormulario.controls?.['titulo'].value,
+      title: this.nuevoTitulo.value,
+      // start : this.miFormulario.controls?.['inicio'].value,
+      start : this.nuevoInicio.value,
+      end : this.miFormulario.controls?.['fin'].value,
+      allDay: false,
+      color: this.miFormulario.controls?.['color'].value,
+    })
+    
+  // this.miFormulario.reset();
   }
 
- handleeventClick(clickInfo: EventClickArg){
-  if(confirm(`Desea eliminar el evento '${clickInfo.event.title}'`)){
-    clickInfo.event.remove();
-  }
- }
+
+
+  agregarListaEventos(){
   
-  CampoEsValido(campo: string){
-    return this.miFormulario.controls?.[campo]?.errors 
-    && this.miFormulario.controls?.[campo]?.touched;
+    if(this.nuevoTitulo.invalid){return;}
+    this.EventosArr.push( new FormControl( this.nuevoTitulo.value ) );
+    this.EventosArr.push(new FormControl(this.nuevoInicio.value))
+    this.nuevoTitulo.reset();
+    this.nuevoInicio.reset();
   }
-  
-  toggleWeekends (){
-    this.calendarOptions.weekends = !this.calendarOptions.weekends
-  };
 
-  handleEvents(events: EventApi[]){
-    this.currentEvent = events
-  }
+  
+   handleeventClick(clickInfo: EventClickArg){
+    if(confirm(`Desea eliminar el evento '${clickInfo.event.title}'`)){
+      clickInfo.event.remove();
+    }
+   }
+    
+    CampoEsValido(campo: string){
+      return this.miFormulario.controls?.[campo]?.errors 
+      && this.miFormulario.controls?.[campo]?.touched;
+    }
+    
+    toggleWeekends (){
+      this.calendarOptions.weekends = !this.calendarOptions.weekends
+    };
 }
 
 
