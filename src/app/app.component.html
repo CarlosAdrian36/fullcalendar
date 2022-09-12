@@ -61,8 +61,9 @@
                     <label class="col-sm-3 col-form-label">Color</label>
                     <div class="col-sm-9">
                         <input type="color"
-                                formControlName="color"
+                                [formControl]="nuevoColor"
                                 class="form-control">
+
                     </div>
                 </div>
 
@@ -97,33 +98,42 @@
                                 <th>Eliminar</th>
                                 </tr>
                             </thead>
-                            <tbody  *ngFor="let e of EventosArr.controls; let i = index"
+                            <tbody  
                             >
-                                <td>
-                                    <input
-                                    type="text"
-                                    class="form-control"
-                                    [formControlName]="i"
-                                    >
-                                </td>
-                                <td>
-                                    <input type="color"
-                                    class="form-control"
-                                    >
-                                </td>
-                                <td>
-                                    <input type="datetime-local"
-                                [formControlName]="i">
-                                </td>
-                                <td>
-                                    <input type="datetime-local">
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-outline-danger"
-                                            >
-                                        Eliminar
-                                    </button>
-                                </td>
+                                <tr *ngFor="let e of EventosArr.controls ; let i = index">
+                                    <!-- EventosArr.controls -->
+                                    <td>
+                                        <input
+                                        type="text"
+                                        class="form-control"
+                                        [formControlName]="i"
+                                        />
+                                    </td>
+                                    <td>
+                                        <input type="color"
+                                        class="form-control"
+                                        [formControlName]="i"
+                                        >
+                                    </td>
+                                    <td>
+                                        <input type="datetime-local"
+                                    [formControlName]="i">
+                                    </td>
+                                    <td>
+                                        <input type="datetime-local">
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-outline-danger"
+                                                (click)=" eliminar(i)"
+                                                >
+                                            Eliminar
+                                        </button>
+                                    </td>
+                                </tr>
+                                    
+
+                                
+                                    
 
                             </tbody>
                         </table>
@@ -146,7 +156,15 @@
         <span>NuevoTItulo</span>
         <pre>{{nuevoTitulo.valid}}</pre>
         <hr>
-    <pre>{{nuevoTitulo.value}}</pre>
+        <pre>{{nuevoTitulo.value}}</pre>
+        <hr>
+
+        <span>NuevoInicio</span>
+        <pre>{{nuevoInicio.valid}}</pre>
+        <pre>{{nuevoInicio.value}}</pre>
+
+
+
     </div>
   </div>
 
