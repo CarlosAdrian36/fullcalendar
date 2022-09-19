@@ -20,11 +20,11 @@
                     <label class="col-sm-3 col-form-label">Titulo</label>
                     <div class="col-sm-9">
                         <input type="text"
-                                [formControl]="nuevoTitulo" 
+                                [formControl]="nuevoTitulo"
                                 class="form-control"
                                 placeholder="Ingrese un titulo"
-                                
                                 >
+                                <!-- [formControl]="nuevoTitulo"  -->
                                 
                         <span class="form-text text-danger"
                         *ngIf="CampoEsValido('titulo')">
@@ -51,7 +51,7 @@
                     <label class="col-sm-3 col-form-label">Fecha final</label>
                     <div class="col-sm-9">
                         <input type="datetime-local"
-                                formControlName="fin"
+                                [formControl]="nuevoFin"
                             class="form-control">
                     </div>
                 </div>
@@ -71,11 +71,11 @@
                     <div class="col">
                         <button type="submit"
                                 class="btn btn-primary float-end"
-                                (click)="agregarEvento( )"
+                                (click)="addEvent()"
                                 
-                                (click)="agregarListaEventos()"
                                 >
-                                <!-- [disabled]="miFormulario.invalid" -->
+                                <!-- [disabled]="miFormulario.invalid"
+                                (click)="agregarListaEventos()" -->
                             Agregar Evento
                         </button>
                     </div>
@@ -84,11 +84,10 @@
             
 
 
+                <h3>Editar Evento</h3>
 
-                    <h3>Editar Evento</h3>
-
-                    <div formArrayName="Eventos" >
-                        <table class="table table-bordered">
+                <div  >
+                        <table class="table table-bordered" >
                             <thead>
                                 <tr>
                                 <th>Titulo</th>
@@ -98,46 +97,50 @@
                                 <th>Eliminar</th>
                                 </tr>
                             </thead>
-                            <tbody  
-                            >
-                                <tr *ngFor="let e of EventosArr.controls ; let i = index">
-                                    <!-- EventosArr.controls -->
-                                    <td>
-                                        <input
-                                        type="text"
-                                        class="form-control"
-                                        [formControlName]="i"
-                                        />
-                                    </td>
-                                    <td>
-                                        <input type="color"
-                                        class="form-control"
-                                        [formControlName]="i"
-                                        >
-                                    </td>
-                                    <td>
-                                        <input type="datetime-local"
-                                    [formControlName]="i">
-                                    </td>
-                                    <td>
-                                        <input type="datetime-local">
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-outline-danger"
-                                                (click)=" eliminar(i)"
-                                                >
-                                            Eliminar
-                                        </button>
-                                    </td>
-                                </tr>
-                                    
+                            <!-- EventosArr.controls -->
+                            <tbody formArrayName="Eventos" >
+                                <ng-container *ngFor="let event of EventosArr.controls ; index as i">
+                                    <tr   >
+                                        <!-- EventosArr.controls -->
+                                        <td>
+                                            <input
+                                            type="text"
+                                            class="form-control"
+                                            [formControlName]="i"
+                                            />
+                                            
+                                        </td>
+                                        <td>
+                                            <input type="color"
+                                                class="form-control"
+                                                [formControlName]="i"
+                                            >
+                                            
+                                        </td>
+                                        <td>
+                                            <input type="datetime-local"
+                                                class="form-control"
+                                                [formControlName]="i">
+                                        </td>
+                                        <td>
+                                            <input type="datetime-local"
+                                                class="form-control"
+                                                [formControlName]="i">
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-outline-danger"
+                                                    (click)=" eliminar(i)">
+                                                Eliminar
+                                            </button>
+                                        </td>                 
+                                    </tr>
 
+                                </ng-container>
                                 
-                                    
-
+                                
                             </tbody>
                         </table>
-                    </div>
+                </div>
             </form>
         </div>
     </div>
