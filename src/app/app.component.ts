@@ -61,9 +61,7 @@ export class AppComponent  {
     return this.miFormulario.controls['Eventos'] as FormArray
   }
  
-  // get EventosArr(){
-  //   return this.miFormulario.get('Eventos') as FormArray
-  // }
+ 
 
   constructor(private fb: FormBuilder){}
   
